@@ -8,11 +8,13 @@ public class Car {
         this.vehicleNo = vehicleNo;
         this.color = color;
     }
-    public String getvehicleNo() {
-        return vehicleNo;
+
+
+    public String vehicleNo() {
+        return new String(this.vehicleNo);
     }
 
-    public String getColor() {
-        return color;
+    public String color() {
+        return new String(this.color);
     }
 }

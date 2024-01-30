@@ -3,11 +3,15 @@ package org.example;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class ParkingLot {
 
     private Car[] slots;
-    private Map<Integer,String> cars;
+    private Map<String,Integer> cars;
+
+    private String ticket;
+
 
     public ParkingLot(int numberOfSlots) throws Exception {
         if(numberOfSlots <=0)throw new Exception("slots can't be empty or negative");
@@ -15,30 +19,36 @@ public class ParkingLot {
         this.cars = new HashMap<>();
     }
 
-    private boolean find(int parkedIndex){
+    public ParkingLot(int numberOfSlots,Car[] slots) throws Exception {
+        if(numberOfSlots <=0)throw new Exception("slots can't be empty or negative");
+        this.slots = slots;
+    }
 
-        if(cars.containsKey(parkedIndex)){
+    private boolean find(String ticket){
+
+        if(cars.containsKey(ticket)){
             return true;
         }else{
             return false;
         }
     }
 
-    public void parkCar(Car car,int parkedIndex) throws Exception {
+    public String parkCar(Car car) throws Exception {
 
         int emptyIndex = findEmptySlot();
-        if(parkedIndex < 0 || emptyIndex == -1 || find(parkedIndex))throw new Exception("can't parked");
+        if(emptyIndex == -1)throw new Exception("can't park");
         if (emptyIndex != -1) {
             slots[emptyIndex] = car;
-            cars.put(emptyIndex,car.getColor());
+            ticket = UUID.randomUUID().toString();
+            cars.put(ticket,emptyIndex);
         }
+        return ticket;
     }
 
-    public void unParkCar(int unParkedIndex) throws Exception{
-
-        if(!find(unParkedIndex))throw new Exception("car not found");
-        slots[unParkedIndex] = null;
-        cars.remove(unParkedIndex);
+    public void unParkCar(String ticket) throws Exception{
+        if(!find(ticket))throw new Exception("car not found");
+        slots[cars.get(ticket)] = null;
+        cars.remove(ticket);
     }
     public int findEmptySlot() {
         for (int i = 0; i < slots.length; i++) {

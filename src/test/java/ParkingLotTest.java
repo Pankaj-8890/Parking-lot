@@ -9,54 +9,71 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 public class ParkingLotTest {
 
     @Test
-    public void TestParkCarInEmptySlot() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(3);
-        parkingLot.parkCar(new Car("ABC123","green"), 0);
-        parkingLot.parkCar(new Car("XYZ456","blue"), 1);
-        assertDoesNotThrow(() -> parkingLot.parkCar(new Car("ABC123","blue"), 2));
+    public void TestParkingLotWhenWith0Slots() {
+        assertThrows(Exception.class,() -> new ParkingLot(0));
     }
 
     @Test
-    public void TestParkCarInvalidSlot() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(3);
-        parkingLot.parkCar(new Car("ABC123","blue"), 0);
-        parkingLot.parkCar(new Car("XYZ456","green"), 1);
-        parkingLot.parkCar(new Car("XYZ456","green"), 2);
-        assertThrows(Exception.class,() -> parkingLot.parkCar(new Car("ABC123","blue"), 3));
+    public void TestParkingLotWhenWithNegativeSlots() {
+        assertThrows(Exception.class,() -> new ParkingLot(-1));
     }
+
+
+    @Test
+    public void TestParkCarInEmptySlot() throws Exception {
+        ParkingLot parkingLot = new ParkingLot(3);
+        parkingLot.parkCar(new Car("ABC123","green"));
+        parkingLot.parkCar(new Car("XYZ456","blue"));
+        assertDoesNotThrow(() -> parkingLot.parkCar(new Car("ABC124","blue")));
+    }
+
+
+
 
     @Test
     public void TestParkCarWhenCarIsAlreadyParked() throws Exception {
         ParkingLot parkingLot = new ParkingLot(3);
-        parkingLot.parkCar(new Car("ABC123","green"), 0);
-        parkingLot.parkCar(new Car("XYZ456","blue"), 1);
-        parkingLot.parkCar(new Car("ABC123","green"), 2);
-        assertThrows(Exception.class,() -> parkingLot.parkCar(new Car("XYZ456","blue"), 2));
+        parkingLot.parkCar(new Car("ABC123","green"));
+        parkingLot.parkCar(new Car("XYZ456","blue"));
+        parkingLot.parkCar(new Car("ABC124","green"));
+        assertThrows(Exception.class,() -> parkingLot.parkCar(new Car("XYZ457","blue")));
+    }
+
+
+    @Test
+    public void TestUnParkCarTheValidCarTicket() throws Exception {
+        ParkingLot parkingLot = new ParkingLot(1);
+        String ticket = parkingLot.parkCar(new Car("ABC123","green"));
+        assertDoesNotThrow(() ->  parkingLot.unParkCar(ticket));
     }
 
     @Test
-    public void TestParkCarWithInvalidParkedIndex() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(2);
-        parkingLot.parkCar(new Car("ABC123","green"), 0);
-        assertThrows(Exception.class,() -> parkingLot.parkCar(new Car("XYZ456","blue"), -1));
+    public void TestUnParkCarTheInValidTicket() throws Exception {
+        ParkingLot parkingLot = new ParkingLot(1);
+        String ticket = parkingLot.parkCar(new Car("ABC123","green"));
+        assertThrows(Exception.class,() -> parkingLot.unParkCar("abc"));
     }
 
     @Test
-    public void TestUnParkCarCorrectCar() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(3);
-        parkingLot.parkCar(new Car("ABC123","green"), 0);
-        parkingLot.parkCar(new Car("XYZ456","blue"), 1);
-        parkingLot.parkCar(new Car("ABC123","green"), 2);
-        assertDoesNotThrow(() ->  parkingLot.unParkCar(2));
+    public void TestFindEmptySlotsWhenThereIsEmptySlots() throws Exception{
+
+        Car[] cars = new Car[3];
+        cars[0] = new Car("ABC123","green");
+        cars[1] = new Car("XYZ456","blue");
+        ParkingLot parkingLot = new ParkingLot(3,cars);
+        assertEquals(2,parkingLot.findEmptySlot());
     }
 
     @Test
-    public void TestUnParkCarInCorrectCar() throws Exception {
-        ParkingLot parkingLot = new ParkingLot(3);
-        parkingLot.parkCar(new Car("ABC123","green"), 0);
-        parkingLot.parkCar(new Car("XYZ456","blue"), 1);
-        parkingLot.parkCar(new Car("ABC123","green"), 2);
-        assertThrows(Exception.class,() -> parkingLot.unParkCar(3));
+    public void TestFindEmptySlotsWhenThereNoEmptySlots() throws Exception{
+
+        Car[] cars = new Car[2];
+        cars[0] = new Car("ABC123","green");
+        cars[1] = new Car("XYZ456","blue");
+        ParkingLot parkingLot = new ParkingLot(2,cars);
+        assertEquals(-1,parkingLot.findEmptySlot());
     }
+
+
 
 }
