@@ -45,10 +45,12 @@ public class ParkingLot {
         return ticket;
     }
 
-    public void unParkCar(String ticket) throws Exception{
-        if(!find(ticket))throw new Exception("car not found");
+    public Car unParkCar(String ticket) throws CarNotFoundException{
+        if(!find(ticket))throw new CarNotFoundException("car not found");
+        Car car = slots[cars.get(ticket)];
         slots[cars.get(ticket)] = null;
         cars.remove(ticket);
+        return car;
     }
     public int findEmptySlot() {
         for (int i = 0; i < slots.length; i++) {

@@ -1,4 +1,5 @@
 import org.example.Car;
+import org.example.CarNotFoundException;
 import org.example.ParkingLot;
 import org.junit.Test;
 
@@ -51,7 +52,7 @@ public class ParkingLotTest {
     public void TestUnParkCarTheInValidTicket() throws Exception {
         ParkingLot parkingLot = new ParkingLot(1);
         String ticket = parkingLot.parkCar(new Car("ABC123","green"));
-        assertThrows(Exception.class,() -> parkingLot.unParkCar("abc"));
+        assertThrows(CarNotFoundException.class,() -> parkingLot.unParkCar("abc"));
     }
 
     @Test

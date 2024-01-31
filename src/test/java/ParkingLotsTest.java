@@ -1,4 +1,5 @@
 import org.example.Car;
+import org.example.CarNotFoundException;
 import org.example.ParkingLot;
 import org.example.ParkingLots;
 import org.junit.Test;
@@ -31,5 +32,25 @@ public class ParkingLotsTest {
         parkingLots.parkCar(new Car("XYZ4565","blue"));
         parkingLots.parkCar(new Car("XYZ4567","blue"));
         assertThrows(Exception.class,() -> parkingLots.parkCar(new Car("XYZ4568","blue")));
+    }
+
+    @Test
+    public void TestUnParkCarThroughParkingLotsWithValidCarTicket() throws Exception {
+        ParkingLots parkingLots = new ParkingLots();
+        ParkingLot parking = new ParkingLot(1);
+        parkingLots.add(parking);
+        Car car = new Car("xyz01","blue");
+        String ticket = parking.parkCar(car);
+        assertDoesNotThrow(() -> parkingLots.unPark(ticket));
+    }
+
+    @Test
+    public void TestUnParkCarThroughParkingLotsWithInValidCarTicket() throws Exception {
+        ParkingLots parkingLots = new ParkingLots();
+        ParkingLot parking = new ParkingLot(1);
+        parkingLots.add(parking);
+        Car car = new Car("xyz01","blue");
+        String ticket = parking.parkCar(car);
+        assertThrows(CarNotFoundException.class,() -> parkingLots.unPark("abc"));
     }
 }

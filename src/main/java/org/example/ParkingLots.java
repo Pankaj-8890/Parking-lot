@@ -28,5 +28,13 @@ public class ParkingLots {
         }
         throw new Exception("can't parked");
     }
-    
+    public Car unPark(String id) throws CarNotFoundException {
+        for (ParkingLot parkingLot: parkingLots) {
+            Car car = parkingLot.unParkCar(id);
+            if (car != null) {
+                return car;
+            }
+        }
+        throw new CarNotFoundException("No car parked with this id.");
+    }
 }
