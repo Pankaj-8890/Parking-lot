@@ -11,6 +11,7 @@ public class ParkingLot {
         for (int i = 0; i < slots.length; i++) {
             slots[i] = new Slot();
         }
+
     }
 
     public String parkCar(Car car) throws CanNotParkedException {
@@ -18,7 +19,13 @@ public class ParkingLot {
         if (emptySlot == -1) {
             throw new CanNotParkedException("Parking lot is full");
         }
-        return slots[emptySlot].parkCar(car);
+        String result = slots[emptySlot].parkCar(car);
+        if(isFull()){
+            EventBus.instance().publish(ObserverEvent.FULL,this);
+        }else{
+            EventBus.instance().publish(ObserverEvent.EMPTY,this);
+        }
+        return result;
     }
 
 
@@ -36,7 +43,11 @@ public class ParkingLot {
         if (slot == null) {
             throw new CarNotFoundException("Car not found.");
         }
-        return slot.unParkCar(id);
+        Car car = slot.unParkCar(id);
+        if(!isFull()){
+            EventBus.instance().publish(ObserverEvent.EMPTY,this);
+        }
+        return car;
     }
 
     public boolean isFull(){
@@ -55,4 +66,5 @@ public class ParkingLot {
         }
         return -1;
     }
+
 }

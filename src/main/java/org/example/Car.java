@@ -9,12 +9,4 @@ public class Car {
         this.color = color;
     }
 
-
-    public String vehicleNo() {
-        return new String(this.vehicleNo);
-    }
-
-    public String color() {
-        return new String(this.color);
-    }
 }
