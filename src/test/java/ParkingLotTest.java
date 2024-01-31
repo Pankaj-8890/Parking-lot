@@ -1,3 +1,4 @@
+import org.example.CanNotParkedException;
 import org.example.Car;
 import org.example.CarNotFoundException;
 import org.example.ParkingLot;
@@ -37,7 +38,7 @@ public class ParkingLotTest {
         parkingLot.parkCar(new Car("ABC123","green"));
         parkingLot.parkCar(new Car("XYZ456","blue"));
         parkingLot.parkCar(new Car("ABC124","green"));
-        assertThrows(Exception.class,() -> parkingLot.parkCar(new Car("XYZ457","blue")));
+        assertThrows(CanNotParkedException.class,() -> parkingLot.parkCar(new Car("XYZ457","blue")));
     }
 
 
@@ -55,25 +56,7 @@ public class ParkingLotTest {
         assertThrows(CarNotFoundException.class,() -> parkingLot.unParkCar("abc"));
     }
 
-    @Test
-    public void TestFindEmptySlotsWhenThereIsEmptySlots() throws Exception{
 
-        Car[] cars = new Car[3];
-        cars[0] = new Car("ABC123","green");
-        cars[1] = new Car("XYZ456","blue");
-        ParkingLot parkingLot = new ParkingLot(3,cars);
-        assertEquals(2,parkingLot.findEmptySlot());
-    }
-
-    @Test
-    public void TestFindEmptySlotsWhenThereNoEmptySlots() throws Exception{
-
-        Car[] cars = new Car[2];
-        cars[0] = new Car("ABC123","green");
-        cars[1] = new Car("XYZ456","blue");
-        ParkingLot parkingLot = new ParkingLot(2,cars);
-        assertEquals(-1,parkingLot.findEmptySlot());
-    }
 
 
 

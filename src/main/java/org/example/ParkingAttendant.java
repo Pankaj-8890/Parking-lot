@@ -3,19 +3,18 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParkingLots {
+public class ParkingAttendant {
 
     private List<ParkingLot> parkingLots;
 
 
-    public ParkingLots(){
+    public ParkingAttendant(){
         parkingLots = new ArrayList<>();
     }
 
     public void add(ParkingLot parkingLot){
         parkingLots.add(parkingLot);
     }
-
 
     public void parkCar(Car car) throws Exception {
 
