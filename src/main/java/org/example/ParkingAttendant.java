@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+
 public class ParkingAttendant implements ISubscriber{
 
     private final List<ParkingLot> parkingLots;

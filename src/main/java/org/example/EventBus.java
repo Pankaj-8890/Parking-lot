@@ -9,6 +9,8 @@ public class EventBus{
     private static final EventBus INSTANCE = new EventBus();
 
     private final Map<ObserverEvent, ArrayList<ISubscriber>> subscribers;
+
+
     private EventBus(){
         this.subscribers = new HashMap<>();
         for(ObserverEvent event : ObserverEvent.values()){
@@ -19,6 +21,7 @@ public class EventBus{
     public static EventBus instance(){
         return INSTANCE;
     }
+
 
     public void publish(ObserverEvent event,Object publisher){
         for(ISubscriber subscriber : subscribers.get(event)){

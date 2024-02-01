@@ -129,21 +129,7 @@ public class ParkingAttendantTest {
     }
 
     @Test
-    public void TestNotifyTheParkingAttendantWhenParkingLotisNotFull() throws Exception {
-        ISubscriber parkingAttendant = mock(ParkingAttendant.class);
-        ParkingLot parkingLot = new ParkingLot(2);
-        Car carA = new Car("xyz01","blue");
-
-        EventBus.instance().subscribe(parkingAttendant,ObserverEvent.EMPTY);
-        parkingLot.parkCar(carA);
-
-        verify(parkingAttendant).notify(ObserverEvent.EMPTY,parkingLot);
-
-
-    }
-
-    @Test
-    public void TestNotifyTheParkingAttendantWhenUnParkCarAndParkingLotIsNotFull() throws Exception {
+    public void TestNotifyTheParkingAttendantWhenParkingLotisEmpty() throws Exception {
         ISubscriber parkingAttendant = mock(ParkingAttendant.class);
         ParkingLot parkingLot = new ParkingLot(2);
         Car carA = new Car("xyz01","blue");
@@ -154,6 +140,7 @@ public class ParkingAttendantTest {
 
         EventBus.instance().subscribe(parkingAttendant,ObserverEvent.EMPTY);
         parkingLot.unParkCar(ticketB);
+        parkingLot.unParkCar(ticketA);
 
         verify(parkingAttendant).notify(ObserverEvent.EMPTY,parkingLot);
 
