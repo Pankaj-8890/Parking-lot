@@ -3,8 +3,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class ParkingAttendantTest {
     @Test
@@ -129,21 +128,7 @@ public class ParkingAttendantTest {
     }
 
     @Test
-    public void TestNotifyTheParkingAttendantWhenParkingLotisNotFull() throws Exception {
-        ISubscriber parkingAttendant = mock(ParkingAttendant.class);
-        ParkingLot parkingLot = new ParkingLot(2);
-        Car carA = new Car("xyz01","blue");
-
-        EventBus.instance().subscribe(parkingAttendant,ObserverEvent.EMPTY);
-        parkingLot.parkCar(carA);
-
-        verify(parkingAttendant).notify(ObserverEvent.EMPTY,parkingLot);
-
-
-    }
-
-    @Test
-    public void TestNotifyTheParkingAttendantWhenUnParkCarAndParkingLotIsNotFull() throws Exception {
+    public void TestNotifyTheParkingAttendantWhenParkingLotisEmpty() throws Exception {
         ISubscriber parkingAttendant = mock(ParkingAttendant.class);
         ParkingLot parkingLot = new ParkingLot(2);
         Car carA = new Car("xyz01","blue");
@@ -154,10 +139,21 @@ public class ParkingAttendantTest {
 
         EventBus.instance().subscribe(parkingAttendant,ObserverEvent.EMPTY);
         parkingLot.unParkCar(ticketB);
+        parkingLot.unParkCar(ticketA);
 
         verify(parkingAttendant).notify(ObserverEvent.EMPTY,parkingLot);
 
     }
+
+//    @Test
+//    public void TestDemo() throws Exception {
+//        ISubscriber parkingAttendant = mock(ParkingAttendant.class);
+//        ParkingLot parkingLot = new ParkingLot(1);
+//        Car carA = new Car("xyz01","blue");
+//        parkingLot.parkCar(carA);
+//
+//        verify(parkingAttendant,never()).notify(ObserverEvent.FULL,parkingLot);
+//    }
 
 
 

@@ -44,7 +44,7 @@ public class ParkingLot {
             throw new CarNotFoundException("Car not found.");
         }
         Car car = slot.unParkCar(id);
-        if(!isFull()){
+        if(isEmpty()){
             EventBus.instance().publish(ObserverEvent.EMPTY,this);
         }
         return car;
@@ -53,6 +53,15 @@ public class ParkingLot {
     public boolean isFull(){
         for (int i = 0; i < slots.length; i++) {
             if (slots[i].isSlotEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isEmpty(){
+        for (int i = 0; i < slots.length; i++) {
+            if (!slots[i].isSlotEmpty()) {
                 return false;
             }
         }

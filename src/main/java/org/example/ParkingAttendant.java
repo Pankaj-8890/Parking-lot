@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+
 public class ParkingAttendant implements ISubscriber{
 
     private final List<ParkingLot> parkingLots;
@@ -12,11 +13,13 @@ public class ParkingAttendant implements ISubscriber{
     private  Statergy statergy;
 
     public ParkingAttendant(){
+
         parkingLots = new ArrayList<>();
         this.statergy = Statergy.NEAREST;
     }
 
     public void add(ParkingLot parkingLot){
+//        EventBus.instance().subscribe(this,ObserverEvent.FULL,parkingLot);
         parkingLots.add(parkingLot);
     }
 
