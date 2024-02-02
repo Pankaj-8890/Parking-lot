@@ -3,8 +3,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class ParkingAttendantTest {
     @Test
@@ -145,6 +144,16 @@ public class ParkingAttendantTest {
         verify(parkingAttendant).notify(ObserverEvent.EMPTY,parkingLot);
 
     }
+
+//    @Test
+//    public void TestDemo() throws Exception {
+//        ISubscriber parkingAttendant = mock(ParkingAttendant.class);
+//        ParkingLot parkingLot = new ParkingLot(1);
+//        Car carA = new Car("xyz01","blue");
+//        parkingLot.parkCar(carA);
+//
+//        verify(parkingAttendant,never()).notify(ObserverEvent.FULL,parkingLot);
+//    }
 
 
 
